@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - gihub-action
   
   workflow_dispatch:
 
@@ -22,7 +23,10 @@ jobs:
       - name: update-kubeconfig
         run: |
           aws eks update-kubeconfig --region us-east-1 --name techchallenge-eks-cluster
+
+      - name: list-files
+        run: ls
       
-      - name: apply kubernetes 
+      - name: apply-kubernetes 
         run: |
           kubectl apply -f ./Kubernetes/
