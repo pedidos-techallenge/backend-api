@@ -1,6 +1,5 @@
 name: Deploy Code to EKS cluster
 
-
 on:
   push:
     branches:
@@ -16,13 +15,14 @@ env:
   AWS_DEFAULT_REGION: 'us-east-1'
 
 jobs:
-  steps:
-    - name: update-kubeconfig
-      run: |
-        aws eks update-kubeconfig --region us-east-1 --name techchallenge-eks-cluster
-    
-    # TODO: Build and deploy image
+  kubernetes:
+    runs-on: ubuntu-latest
 
-    - name: apply kubernetes 
-      run: |
-        kubectl apply -f ./Kubernetes/
+    steps:
+      - name: update-kubeconfig
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name techchallenge-eks-cluster
+      
+      - name: apply kubernetes 
+        run: |
+          kubectl apply -f ./Kubernetes/
