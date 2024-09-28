@@ -44,6 +44,6 @@ jobs:
         run: |
           aws eks update-kubeconfig --region us-east-1 --name techchallenge-eks-cluster
       
-      - name: apply-kubernetes 
+      - name: rollout-kubernetes 
         run: |
-          kubectl apply -f ./Kubernetes/
+          ubectl rollout restart deployment java-app-deployment 
