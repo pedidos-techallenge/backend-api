@@ -1,8 +1,8 @@
 terraform {
+  backend "s3" {}
 }
 
 provider "aws" {}
-
 
 
 resource "aws_apigatewayv2_api" "main" {

@@ -1,6 +1,11 @@
-name: Deploy Code to EKS cluster
+name: Update Code and rollout new changes to EKS cluster
 
 on:
+  push:
+    branches:
+      - main
+      - gihub-action
+  
   workflow_dispatch:
 
 
@@ -9,7 +14,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
   AWS_DEFAULT_REGION: 'us-east-1'
-  TF_STATE_BUCKET: ${{ secrets.TF_STATE_BUCKET }}
 
 jobs:
   kubernetes:
@@ -43,11 +47,3 @@ jobs:
       - name: apply-kubernetes 
         run: |
           kubectl apply -f ./Kubernetes/
-
-      # Setup api gateway integration
-      - name: terraform-init
-        run: terraform -chdir=./terraform init -backend-config="bucket=${TF_STATE_BUCKET}" -backend-config="key=backend-api.tfstate" -backend-config="region=us-east-1"
-
-      - name: terraform-apply
-        run: terraform -chdir=./terraform apply -auto-approve
-
