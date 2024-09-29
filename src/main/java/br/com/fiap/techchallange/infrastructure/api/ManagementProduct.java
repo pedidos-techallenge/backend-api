@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/v1/products")
 @Tag(name = "8. Management Product", description = "Endpoints para a gestão do cadastro dos produtos")
 public class ManagementProduct {
 
@@ -43,7 +43,7 @@ public class ManagementProduct {
     }
 
     @Operation(summary = "Busca os produtos para a exibição ao cliente.")
-    @GetMapping("/products")
+    @GetMapping("/")
     // Este endpoint é duplicado com o /v1/checkout/products, no entanto são contextos diferentes (apresentação do checkout vs gestão de produtos)
     public ResponseEntity<?> getProducts() throws EmptyResultDataAccessException {
         try {
@@ -54,7 +54,7 @@ public class ManagementProduct {
         }
     }
 
-    @GetMapping("/product/{sku}")
+    @GetMapping("/{sku}")
     public ResponseEntity<?> getProductBySkuHTTP(@PathVariable String sku) {
         try {
             IProductManagementPresenter.ProductResponseModel response = productPresenter.present(this.getProductBySkuController.invoke(sku));
@@ -64,7 +64,7 @@ public class ManagementProduct {
         }
     }
 
-    @PostMapping("/product/create")
+    @PostMapping("/create")
     public ResponseEntity<?> createProductHTTP(@RequestBody ProductRequestDTO productDeserializer) {
         try {
             this.registerProductController.invoke(
@@ -82,7 +82,7 @@ public class ManagementProduct {
         return null;
     }
 
-    @PutMapping("/product/{sku}/update")
+    @PutMapping("/{sku}/update")
     public ResponseEntity<?> updateProductHTTP(@PathVariable String sku, @RequestBody ProductRequestDTO productDeserializer) {
         try {
             this.updateProductController.invoke(
@@ -101,7 +101,7 @@ public class ManagementProduct {
         return new ResponseEntity<>("Produto atualizado com sucesso", HttpStatus.OK);
     }
 
-    @PostMapping("/product/{sku}/remove")
+    @PostMapping("/{sku}/remove")
     public ResponseEntity<?> deleteProductBySkuHTTP(@PathVariable String sku) {
         try {
             this.removeProductController.invoke(sku);
