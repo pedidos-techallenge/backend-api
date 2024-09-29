@@ -46,4 +46,4 @@ jobs:
       
       - name: rollout-kubernetes 
         run: |
-          ubectl rollout restart deployment java-app-deployment 
+          kubectl rollout restart deployment java-app-deployment 
