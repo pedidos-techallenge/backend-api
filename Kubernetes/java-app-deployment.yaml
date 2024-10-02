@@ -19,7 +19,7 @@ spec:
             - containerPort: 8080
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://techchallenge-rds.cpgtz5tfkqus.us-east-1.rds.amazonaws.com:3306/dbtechchallange
+              value: "jdbc:mysql://techchallenge-rds.cpgtz5tfkqus.us-east-1.rds.amazonaws.com:3306/dbtechchallange"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
